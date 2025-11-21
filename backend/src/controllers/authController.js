@@ -71,20 +71,20 @@ const login = async (req, res) => {
   const client = await pool.connect();
 
   try {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
     // Validate input
-    if (!username || !password) {
+    if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide username and password'
+        message: 'Please provide email and password'
       });
     }
 
-    // Find user
+    // Find user by email
     const result = await client.query(
-      'SELECT * FROM users WHERE username = $1',
-      [username]
+      'SELECT * FROM users WHERE email = $1',
+      [email]
     );
 
     if (result.rows.length === 0) {
